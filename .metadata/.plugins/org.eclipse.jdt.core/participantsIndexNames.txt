@@ -1,0 +1,5 @@
+INDEX VERSION 1.134
+/home/tesdap/codeProjects/DAT152/Oblig3/webapps/.metadata/.plugins/org.eclipse.jst.jsp.core/jspsearch/1856500841.index
+/DAT152WebSearch/src
+/home/tesdap/codeProjects/DAT152/Oblig3/webapps/.metadata/.plugins/org.eclipse.jst.jsp.core/jspsearch/2505026297.index
+/DAT152BlogApp/src

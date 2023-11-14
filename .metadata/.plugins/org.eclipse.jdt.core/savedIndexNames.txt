@@ -1,0 +1,26 @@
+INDEX VERSION 1.134+/home/tesdap/codeProjects/DAT152/Oblig3/webapps/.metadata/.plugins/org.eclipse.jdt.core
+3409077962.index
+1839470971.index
+639741304.index
+4280282433.index
+498697788.index
+1733233257.index
+1878149148.index
+3108995772.index
+1623209471.index
+244539077.index
+3845006075.index
+241990802.index
+37274783.index
+2858780872.index
+159489332.index
+1875649797.index
+2130462240.index
+1515827270.index
+2031121202.index
+4257750574.index
+173305282.index
+719404826.index
+3995744503.index
+1865797976.index
+661908061.index
