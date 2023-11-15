@@ -1,6 +1,8 @@
 package no.hvl.dat152.obl4.controller;
 
 import java.io.IOException;
+import java.security.SecureRandom;
+import java.util.Base64;
 import java.util.List;
 
 import jakarta.servlet.ServletException;
@@ -20,6 +22,9 @@ public class LoginServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		
+		String csrfToken = generateCSRFToken();
+		
+		request.getSession().setAttribute("csrfToken", csrfToken);
 		request.getRequestDispatcher("login.jsp").forward(request, response);
 	}
 
@@ -27,6 +32,14 @@ public class LoginServlet extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 
 		boolean successfulLogin = login(request, response);
+		
+        // Validate CSRF token
+        if (!validateCSRFToken(request)) {
+            request.setAttribute("message", "CSRF Attack Detected");
+            request.getRequestDispatcher("login.jsp").forward(request, response);
+            return;
+        }
+
 
 		if (successfulLogin) {
 			
@@ -76,4 +89,25 @@ public class LoginServlet extends HttpServlet {
 		
 		return successfulLogin;
 	}
+	
+	private String generateCSRFToken() {
+	    SecureRandom secureRandom = new SecureRandom();
+	    byte[] randomBytes = new byte[32];
+
+	    secureRandom.nextBytes(randomBytes);
+
+	    String csrfToken = Base64.getUrlEncoder().withoutPadding().encodeToString(randomBytes);
+
+	    return csrfToken;
+	}
+	
+    private boolean validateCSRFToken(HttpServletRequest request) {
+        String clientCSRFToken = request.getParameter("csrfToken");
+        String serverCSRFToken = (String) request.getSession().getAttribute("csrfToken");
+
+        // Validate CSRF token
+        return clientCSRFToken != null && clientCSRFToken.equals(serverCSRFToken);
+    }
+	
+	
 }

@@ -17,6 +17,7 @@
 		<input type="hidden" name="scope" value="${scope}"/>
 		<input type="hidden" name="redirect_uri" value="${redirect_uri}"/>
 		<input type="hidden" name="state" value="${state}"/>
+		<input type="hidden" name="csrfToken" value="${sessionScope.csrfToken}"/>
 		<p><input type="submit" value="Log in"/></p>
 	</form>
 	<p><a href="index.jsp">Back</a></p>

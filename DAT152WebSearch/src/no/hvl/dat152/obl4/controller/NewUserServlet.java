@@ -1,6 +1,8 @@
 package no.hvl.dat152.obl4.controller;
 
 import java.io.IOException;
+import java.security.SecureRandom;
+import java.util.Base64;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -29,7 +31,9 @@ public class NewUserServlet extends HttpServlet {
 		
 		int len = request.getRequestURL().length();
 		String dicturi = request.getRequestURL().substring(0, len-7)+"v003/";
-
+		
+		generateAndStoreCSRFToken(request);
+		
 		request.setAttribute("dictconfig", dicturi);
 		request.getRequestDispatcher("newuser.jsp").forward(request, response);
 	}
@@ -38,6 +42,13 @@ public class NewUserServlet extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 
 		boolean successfulRegistration = false;
+		
+	    // Validate CSRF token
+	    if (!validateCSRFToken(request)) {
+	        request.setAttribute("message", "CSRF Attack Detected");
+	        request.getRequestDispatcher("newuser.jsp").forward(request, response);
+	        return;
+	    }
 
 		String username = Validator.validString(request
 				.getParameter("username"));
@@ -62,6 +73,7 @@ public class NewUserServlet extends HttpServlet {
 			request.getRequestDispatcher("newuser.jsp").forward(request, response);
 			return;
 		}
+	
 
 		AppUser user = null;
 		if (password.equals(confirmedPassword)) {
@@ -88,5 +100,35 @@ public class NewUserServlet extends HttpServlet {
 					response);
 		}
 	}
+	
+	
+	private String generateCSRFToken() {
+	    SecureRandom secureRandom = new SecureRandom();
+	    byte[] randomBytes = new byte[32];
+
+	    secureRandom.nextBytes(randomBytes);
+
+	    String csrfToken = Base64.getUrlEncoder().withoutPadding().encodeToString(randomBytes);
+
+	    return csrfToken;
+	}
+	
+    private void generateAndStoreCSRFToken(HttpServletRequest request) {
+        // Generate a CSRF token
+        String csrfToken = generateCSRFToken();
+
+        // Store CSRF token in the session
+        request.getSession().setAttribute("csrfToken", csrfToken);
+    }
+	
+    private boolean validateCSRFToken(HttpServletRequest request) {
+        String clientCSRFToken = request.getParameter("csrfToken");
+        String serverCSRFToken = (String) request.getSession().getAttribute("csrfToken");
+
+        // Validate CSRF token
+        return clientCSRFToken != null && clientCSRFToken.equals(serverCSRFToken);
+    }
+	
+	
 
 }

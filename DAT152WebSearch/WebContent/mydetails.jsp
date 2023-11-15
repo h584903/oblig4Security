@@ -27,6 +27,7 @@
 		<tr><td><p>Sort By </td></tr>
 		<tr><td><input type="radio" name="sortkey" value="datetime">Date<br></td></tr>
 		<tr><td><input type="radio" name="sortkey" value="searchkey">Search Word<br></td></tr>
+		<tr><td><input type="hidden" name="csrfToken" value="${sessionScope.csrfToken}"></td></tr>
 		<tr><td><p><input type="submit" value="Sort"/></p></td>
 		</tr>
 	</table>
