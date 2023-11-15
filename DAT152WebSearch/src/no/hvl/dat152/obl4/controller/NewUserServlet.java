@@ -17,7 +17,13 @@ import no.hvl.dat152.obl4.util.Validator;
 @WebServlet("/newuser")
 public class NewUserServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	
+	private static final int MIN_PASS_LENGTH = 8;
+	
+	private static final String PASS_COMPLEXITY_REGEX = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]+$";
 
+	private static final String COMMON_PATTERN_REGEX = "^(?!.*(123456|abc|password1|qwerty|admin)).*$";
+	
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		
@@ -47,6 +53,15 @@ public class NewUserServlet extends HttpServlet {
 				.getParameter("mobile_phone"));
 		String preferredDict = Validator.validString(request
 				.getParameter("dicturl"));
+		
+		if (password.length() < MIN_PASS_LENGTH || 
+				!password.matches(PASS_COMPLEXITY_REGEX) || 
+				!password.matches(COMMON_PATTERN_REGEX)) {
+			request.setAttribute("message", "Password must be atleast " + MIN_PASS_LENGTH + 
+					" characters long and include uppercase, lowercase, digit and special characters!");
+			request.getRequestDispatcher("newuser.jsp").forward(request, response);
+			return;
+		}
 
 		AppUser user = null;
 		if (password.equals(confirmedPassword)) {

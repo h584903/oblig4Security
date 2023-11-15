@@ -14,6 +14,12 @@ import no.hvl.dat152.obl4.util.Validator;
 @WebServlet("/updatepassword")
 public class UpdatePasswordServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	
+	private static final int MIN_PASS_LENGTH = 8;
+	
+	private static final String PASS_COMPLEXITY_REGEX = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]+$";
+
+	private static final String COMMON_PATTERN_REGEX = "^(?!.*(123456|abc|password1|qwerty|admin)).*$";
 
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
@@ -42,6 +48,14 @@ public class UpdatePasswordServlet extends HttpServlet {
 		if (RequestHelper.isLoggedIn(request)) {
 			
 			AppUser user = (AppUser) request.getSession().getAttribute("user");
+			
+			if (passwordnew.length() < MIN_PASS_LENGTH ||
+					!passwordnew.matches(PASS_COMPLEXITY_REGEX) ||
+					!passwordnew.matches(COMMON_PATTERN_REGEX)) {
+				request.setAttribute("message", "Password must be atleast " + MIN_PASS_LENGTH + 
+						" characters long and include uppercase, lowercase, digit and special characters!");
+			request.getRequestDispatcher("updatepassword.jsp").forward(request, response);
+			}
 			
 			AppUserDAO userDAO = new AppUserDAO();
 			
