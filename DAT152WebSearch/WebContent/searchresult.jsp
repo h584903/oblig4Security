@@ -10,11 +10,11 @@
 </head>
 <body>
 	<h3>Search Results</h3>
-	<p><b>Search key: "${searchkey}"</b></p>
+	<p><b>Search key: "<c:out value="${searchkey}" />"</b></p>
 	<c:forEach var="entry" items="${result}">
 		<p>${entry}</p>
 	</c:forEach><br>
 	<p><a href="searchpage">Back to Main search page</a></p>
-	<p><b>You are logged in as ${user.username}. <a href="logout">Log out</a></b></p>
+	<p><b>You are logged in as <c:out value="${user.username}" />. <a href="logout">Log out</a></b></p>
 </body>
 </html>
