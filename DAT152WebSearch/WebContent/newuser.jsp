@@ -17,7 +17,7 @@
 		<p>First Name <input type="text" name="first_name" /></p>
 		<p>Last Name <input type="text" name="last_name" /></p>
 		<p>Mobile Phone <input type="text" name="mobile_phone" /></p>
-		<p><input type="hidden" name="csrf" value="${sessionScope.csrfToken}"></p>
+		<p><input type="hidden" name="csrfToken" value="${sessionScope.csrfToken}"></p>
 		<p><b>Preferred Dictionary Source for this computer</b><br>
 			<input type="radio" name="dicturl" value="${dictconfig}" checked="checked"/>http://localhost... (Norway)<br>
 			<input type="radio" name="dicturl" value="http://www.mso.anu.edu.au/~ralph/OPTED/v003/"/>http://www.mso.anu.edu.au... (Australia)

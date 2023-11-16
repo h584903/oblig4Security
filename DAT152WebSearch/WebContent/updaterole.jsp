@@ -11,7 +11,7 @@
 	<h3>Update role for existing user</h3>
 	<p><font color="red">${message}</font></p>
 	<form action="updaterole" method="post">
-	<input type="hidden" name="csrf" value="${sessionScope.csrfToken}"/>
+	<input type="hidden" name="csrfToken" value="${sessionScope.csrfToken}"/>
 	<table>
 	<tr><td><p>Username</td> 
 		<td>
