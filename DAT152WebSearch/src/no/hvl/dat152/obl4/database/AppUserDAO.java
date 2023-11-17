@@ -1,6 +1,7 @@
 package no.hvl.dat152.obl4.database;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -15,31 +16,33 @@ public class AppUserDAO {
 
     String hashedPassword = Crypto.generateMD5Hash(password);
 
-    String sql = "SELECT * FROM SecOblig.AppUser" 
-        + " WHERE username = '" + username + "'"
-        + " AND passhash = '" + hashedPassword + "'";
-    
+    String sql = "SELECT * FROM SecOblig.AppUser WHERE username = ? AND passhash = ?";
     
     AppUser user = null;
 
     Connection c = null;
     Statement s = null;
     ResultSet r = null;
-
+    
     try {        
       c = DatabaseHelper.getConnection();
-      s = c.createStatement();       
-      r = s.executeQuery(sql);
-
+      s = c.createStatement();   
+      PreparedStatement pstmt = c.prepareStatement(sql);
+      pstmt.setString(1, username);
+      pstmt.setString(2, hashedPassword);
+      r = pstmt.executeQuery();
+      
       if (r.next()) {
         user = new AppUser(
-            r.getString("username"),
-            r.getString("passhash"),
-            r.getString("firstname"),
-            r.getString("lastname"),
-            r.getString("mobilephone"),
-            r.getString("role"));
+        r.getString("username"),
+        r.getString("passhash"),
+        r.getString("firstname"),
+        r.getString("lastname"),
+        r.getString("mobilephone"),
+        r.getString("role"));
       }
+
+
 
     } catch (Exception e) {
       System.out.println(e);
