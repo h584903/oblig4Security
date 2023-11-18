@@ -12,12 +12,17 @@
 	function validateForm() {
 		var inputs = document.querySelectorAll('input');
 		var arrayofinputs = Array.from(inputs);
-		var pattern = /^[a-zA-Z0-9]+$/;
+		console.log(arrayofinputs);
+		var pattern = /<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/i;
 		
 		arrayofinputs.forEach(function(input) {
-		    if (!pattern.test(input))
-			alert("Invalid input. Please check your input.");
-			return false; 
+			if (input && input.type === 'password') {
+				return true;
+			}
+			else if (pattern.test(input.value)) {
+				alert("Invalid input. Please check your input.");
+				return false; 
+			}
 		});
 		return true;
 	}
