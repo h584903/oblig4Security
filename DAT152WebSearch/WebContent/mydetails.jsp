@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="java.net.URLDecoder" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html>
@@ -11,8 +12,8 @@
 <body>
 	<h3>My details</h3>
 	<p><font color="red"><c:out value="${message}" /></font></p>
-	<p>First name: <c:out value="${user.firstname}" /><br>
-	   Last name: <c:out value="${user.lastname}" /><br>
+	<p>First name: <c:out value="${URLDecoder.decode(user.firstname, 'UTF-8')}" /><br>
+	   Last name: <c:out value="${URLDecoder.decode(user.lastname, 'UTF-8')}" /><br>
 	   Mobile phone: <c:out value="${user.mobilephone}" /></p>
 	<br>
 	<p><b>My personal search history</b></p>
@@ -36,6 +37,6 @@
 	<p><a href="searchpage">Back to Main search page</a></p>
 	<p><a href="updatepassword">Update Password</a></p>
 	<p>${updaterole}</p>
-	<p><b>You are logged in as <c:out value="${user.username}" />. <a href="logout">Log out</a></b></p>
+	<p><b>You are logged in as <c:out value="${URLDecoder.decode(user.username, 'UTF-8')}" />. <a href="logout">Log out</a></b></p>
 </body>
 </html>

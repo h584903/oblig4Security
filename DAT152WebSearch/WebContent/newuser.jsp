@@ -10,21 +10,16 @@
 <title>New User</title>
 <script>
 	function validateForm() {
-		var inputs = document.querySelectorAll('input');
-		var arrayofinputs = Array.from(inputs);
-		console.log(arrayofinputs);
-		var pattern = /<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/i;
-		
-		arrayofinputs.forEach(function(input) {
-			if (input && input.type === 'password') {
-				return true;
-			}
-			else if (pattern.test(input.value)) {
-				alert("Invalid input. Please check your input.");
-				return false; 
-			}
+		var inputs = document.querySelectorAll('#userInput');
+		console.log(inputs);
+		inputs.forEach(function(input) {
+			console.log(input);
+			var encoded = encodeURI(input.value);
+			console.log(encoded);
+			input.value = encoded;
+
+			return true;
 		});
-		return true;
 	}
 </script>
 </head>
@@ -35,7 +30,7 @@
 	</p>
 	<form method="post" onsubmit="return validateForm()">
 		<p>
-			Username <input id="username" type="text" name="username" />
+			Username <input id="userInput" type="text" name="username" />
 		</p>
 		<p>
 			Password <input type="password" name="password" />
@@ -44,13 +39,13 @@
 			Confirm Password <input type="password" name="confirm_password" />
 		</p>
 		<p>
-			First Name <input type="text" name="first_name" />
+			First Name <input id="userInput" type="text" name="first_name" />
 		</p>
 		<p>
-			Last Name <input type="text" name="last_name" />
+			Last Name <input id="userInput" type="text" name="last_name" />
 		</p>
 		<p>
-			Mobile Phone <input type="text" name="mobile_phone" />
+			Mobile Phone <input id="userInput" type="text" name="mobile_phone" />
 		</p>
 		<p>
 			<input type="hidden" name="csrfToken"
