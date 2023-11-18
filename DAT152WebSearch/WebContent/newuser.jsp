@@ -11,11 +11,8 @@
 <script>
 	function validateForm() {
 		var inputs = document.querySelectorAll('#userInput');
-		console.log(inputs);
 		inputs.forEach(function(input) {
-			console.log(input);
 			var encoded = encodeURI(input.value);
-			console.log(encoded);
 			input.value = encoded;
 
 			return true;
