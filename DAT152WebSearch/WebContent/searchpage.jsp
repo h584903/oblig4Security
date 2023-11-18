@@ -6,14 +6,26 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Search</title>
+<script>
+	function validateSearch() {
+		var search = document.getElementById("searchbar");
+		var pattern = /<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/i;
+		
+		if (pattern.test(search.value)) {
+			alert("Illegal search input. Please check your input.");
+			return false;
+		}
+		return true;
+	}
+</script>
 </head>
 <body>
 	<h3>Main search page</h3>
 	<p><a href="mydetails">My personal details and search history</a></p>
-	<form action="dosearch" method="get">
+	<form action="dosearch" method="get" onsubmit="return validateSearch()">
 		<input type="hidden" name="user" value="${user.username}" /> 
 		<p>Dictionary search (enter word, e.g. Car): 
-			<input type="text" name="searchkey" />
+			<input id="searchbar" type="text" name="searchkey" />
 			<input type="submit" value="Go!"/></p>
 	</form>
 	<p><b>Last 5 searches done by anyone (Only visible to super Admins)</b></p>
