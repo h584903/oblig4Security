@@ -9,7 +9,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>New User</title>
 <script>
-	function validateForm() {
+	function encodeInputs() {
 		var inputs = document.querySelectorAll('#userInput');
 		inputs.forEach(function(input) {
 			var encoded = encodeURI(input.value);
@@ -25,7 +25,7 @@
 	<p>
 		<font color="red">${message}</font>
 	</p>
-	<form method="post" onsubmit="return validateForm()">
+	<form method="post" onsubmit="return encodeInputs()">
 		<p>
 			Username <input id="userInput" type="text" name="username" />
 		</p>
